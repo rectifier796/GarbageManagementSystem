@@ -39,7 +39,7 @@ export const sendOTP = async (to,html) => {
     })
 
     const message = {
-      from: `"Municipality" <${email}>`,
+      from: `"Swachha" <${email}>`,
       to,
       subject:"OTP for Account Setup",
       html
