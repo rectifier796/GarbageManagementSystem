@@ -1,5 +1,3 @@
-// Hotspot.jsx
-
 import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
 
@@ -12,7 +10,7 @@ import {
 } from "@/components/ui/carousel";
 
 const Hotspot = () => {
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState();
   const [location, setLocation] = useState({
     longitude: "",
     latitude: "",
@@ -43,9 +41,7 @@ const Hotspot = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission logic here
     console.log(formData);
-    // Reset form fields if needed
     setFormData({
       phone: "",
       description: "",
@@ -55,51 +51,43 @@ const Hotspot = () => {
     });
   };
 
-  const handleImageChange = (e) => {
-    setImages([...images, ...e.target.files]);
-  };
-
   return (
-    <div className="flex flex-col items-center p-5 space-y-6">
-      <div className="text-3xl font-bold text-slate-900 bg-red-800 text-center p-3 rounded-lg">
+    <div className="flex flex-col items-center p-5">
+      <div className="text-3xl font-bold text-white mb-3 bg-indigo-600 p-3 rounded-md">
         Add Hotspot
       </div>
-      <form onSubmit={handleSubmit} className="flex flex-col items-center space-y-4 w-full max-w-lg">
-        <Carousel>
-          <CarouselContent>
-            {images.length > 0 ? (
-              images.map((image, ind) => (
+      <form onSubmit={handleSubmit} className="flex flex-col items-center w-full max-w-xl space-y-6">
+        <div className="w-full">
+          <Carousel>
+            <CarouselContent>
+              {images?.map((image, ind) => (
                 <CarouselItem key={ind}>
-                  <img src={URL.createObjectURL(image)} alt={`Image ${ind}`} className="w-full h-auto rounded-lg" />
+                  <img src={image} alt="item" className="object-cover w-full h-48 rounded-md" />
                 </CarouselItem>
-              ))
-            ) : (
-              <CarouselItem>
-                <p className="text-sm text-gray-600">No images uploaded yet.</p>
-              </CarouselItem>
-            )}
-          </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
-        </Carousel>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
 
-        <label
-          htmlFor="images"
-          className="bg-slate-700 text-white rounded-lg p-3 cursor-pointer text-center w-full block"
-        >
-          Upload Images
-        </label>
-        <Input
-          type="file"
-          id="images"
-          className="hidden"
-          multiple
-          onChange={handleImageChange}
-        />
+          <label
+            htmlFor="images"
+            className="block bg-slate-700 text-white rounded-lg p-3 mt-3 cursor-pointer text-center"
+          >
+            Upload Images
+          </label>
+          <Input
+            type="file"
+            id="images"
+            className="hidden"
+            multiple
+            onChange={(e) => setImages(e.target.files)}
+          />
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <label htmlFor="phone" className="text-lg font-medium text-gray-800">
+        <div className="w-full space-y-4">
+          <div>
+            <label htmlFor="phone" className="text-lg font-medium text-gray-800 block">
               Phone
             </label>
             <Input
@@ -108,13 +96,13 @@ const Hotspot = () => {
               name="phone"
               value={formData.phone}
               onChange={handleInputChange}
-              className="input-style"
+              className="border-gray-300 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border rounded-md"
               required
             />
           </div>
 
-          <div className="space-y-2">
-            <label htmlFor="description" className="text-lg font-medium text-gray-800">
+          <div>
+            <label htmlFor="description" className="text-lg font-medium text-gray-800 block">
               Description
             </label>
             <Input
@@ -123,13 +111,13 @@ const Hotspot = () => {
               name="description"
               value={formData.description}
               onChange={handleInputChange}
-              className="input-style"
+              className="border-gray-300 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border rounded-md"
               required
             />
           </div>
 
-          <div className="space-y-2">
-            <label htmlFor="wasteType" className="text-lg font-medium text-gray-800">
+          <div>
+            <label htmlFor="wasteType" className="text-lg font-medium text-gray-800 block">
               Waste Type
             </label>
             <select
@@ -137,7 +125,7 @@ const Hotspot = () => {
               name="wasteType"
               value={formData.wasteType}
               onChange={handleInputChange}
-              className="input-style"
+              className="border-gray-300 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border rounded-md"
               required
             >
               <option value="">Select Waste Type</option>
@@ -147,8 +135,8 @@ const Hotspot = () => {
             </select>
           </div>
 
-          <div className="space-y-2">
-            <label htmlFor="address" className="text-lg font-medium text-gray-800">
+          <div>
+            <label htmlFor="address" className="text-lg font-medium text-gray-800 block">
               Address
             </label>
             <Input
@@ -157,13 +145,13 @@ const Hotspot = () => {
               name="address"
               value={formData.address}
               onChange={handleInputChange}
-              className="input-style"
+              className="border-gray-300 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border rounded-md"
               required
             />
           </div>
 
-          <div className="space-y-2">
-            <label htmlFor="regionId" className="text-lg font-medium text-gray-800">
+          <div>
+            <label htmlFor="regionId" className="text-lg font-medium text-gray-800 block">
               Region ID
             </label>
             <Input
@@ -172,7 +160,7 @@ const Hotspot = () => {
               name="regionId"
               value={formData.regionId}
               onChange={handleInputChange}
-              className="input-style"
+              className="border-gray-300 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border rounded-md"
               required
             />
           </div>
@@ -180,7 +168,7 @@ const Hotspot = () => {
 
         <button
           type="submit"
-          className="mt-6 px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          className="mt-6 inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
           Submit
         </button>
