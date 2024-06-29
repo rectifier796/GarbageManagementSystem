@@ -5,6 +5,7 @@ import { connectDB } from "./config/db.js";
 import ExpressFormidable from "express-formidable";
 import cors from 'cors';
 import cookieParser from "cookie-parser";
+import queryRoutes from "./routes/queryRoutes.js";
 
 const app = express();
 dotenv.config();
@@ -19,7 +20,7 @@ app.get("/", (req, res) => {
 });
 
 //Middleware
-app.use(ExpressFormidable());
+app.use(ExpressFormidable({multiples:true}));
 
 app.use(cors({
     origin:'*',
@@ -31,6 +32,7 @@ app.use(cookieParser({httpOnly:true, secure:true, sameSite:'strict', maxAge:1000
 //Routes
 app.use("/api/auth",authRoutes);
 
+app.use("/api/query",queryRoutes);
 
 
 
